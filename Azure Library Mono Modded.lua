@@ -522,7 +522,7 @@ function library:CreateTab(text, desc, mode)
         local UIListLayout_2 = Instance.new("UIListLayout")
         local Dropdown = Instance.new("ScrollingFrame")
 
-        local autoscroll = newAutoScroll(true,false,UIListLayout_2,Dropdown)
+        local autoscroll = newAutoScroll(false,true,UIListLayout_2,Dropdown)
 
         Dropdown.Name = "Dropdown"
         Dropdown.Parent = container
