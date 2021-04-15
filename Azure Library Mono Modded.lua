@@ -1,4 +1,46 @@
 --[[
+    Auto Scroll Size Function Made by Monotter
+    Version: 0.5
+]]
+function newAutoScroll(X,Y,UILayout,ScrollFrame)
+    local arr = {}
+    function arr:Setup()
+        local ACS = arr.UILayout.AbsoluteContentSize
+        local CS = arr.ScrollFrame.AbsoluteSize
+        local height = math.floor(CS.Y)
+        local width = math.floor(CS.X)
+        if arr.Y then
+            height = math.floor(ACS.Y)
+        elseif arr.ScrollFrame.ScrollingDirection == Enum.ScrollingDirection.Y or arr.ScrollFrame.ScrollingDirection == Enum.ScrollingDirection.XY then
+            height = height - (arr.ScrollFrame.ScrollBarThickness+2)
+        end
+        if arr.X then
+            width = math.floor(ACS.X)
+        elseif arr.ScrollFrame.ScrollingDirection == Enum.ScrollingDirection.X or arr.ScrollFrame.ScrollingDirection == Enum.ScrollingDirection.XY then
+            width = width - (arr.ScrollFrame.ScrollBarThickness+2)
+        end
+        arr.ScrollFrame.CanvasSize = UDim2.fromOffset(width,height)
+    end
+
+    function arr:Configure(X,Y,UILayout,ScrollFrame)
+        arr.X = X
+        arr.Y = Y
+        arr.UILayout = UILayout
+        arr.ScrollFrame = ScrollFrame
+        if arr.Connection then
+            arr.Connection:Disconnect()
+        end
+        arr.Connection = arr.UILayout.Changed:Connect(function()
+            arr:Setup()
+        end)
+        arr:Setup()
+    end
+    arr:Configure(X,Y,UILayout,ScrollFrame)
+    return arr
+end
+
+
+--[[
 
    __    ____  __  __  ____  ____ 
   /__\  (_   )(  )(  )(  _ \( ___)
@@ -424,7 +466,7 @@ function library:CreateTab(text, desc, mode)
             SliderInner:TweenSize(UDim2.new(0, math.clamp(mouse.X - SliderInner.AbsolutePosition.X, 0, 172), 0, 9), Enum.EasingDirection.InOut, Enum.EasingStyle.Linear, .07)
             while game:GetService("RunService").RenderStepped:wait() and down do
                 Value = math.floor((((tonumber(maxvalue) - tonumber(minvalue)) / 172) * SliderInner.AbsoluteSize.X) +tonumber(minvalue)) or 0
-				SliderText.Text = text .. " / " .. Value                
+				SliderText.Text = text .. " / " .. Value
 				pcall(callback, Value)
                 SliderInner:TweenSize(UDim2.new(0, math.clamp(mouse.X - SliderInner.AbsolutePosition.X, 0, 172), 0, 9), Enum.EasingDirection.InOut, Enum.EasingStyle.Linear, .07)
             end
@@ -465,10 +507,11 @@ function library:CreateTab(text, desc, mode)
 
 		return ss
     end
-    function s:CreateDropDown(text, list, callback)
+    function s:CreateDropDown(text, list, callback, MaxSize)
 		callback = callback or function() end
         text = text or ""
 		list = list or {}
+        MaxSize = MaxSize or 500
         resize(30)
         local IsDropped = false
         local DropYSize = 0
@@ -477,7 +520,9 @@ function library:CreateTab(text, desc, mode)
         local DropdownText = Instance.new("TextLabel")
         local DropdownOpen = Instance.new("TextButton")
         local UIListLayout_2 = Instance.new("UIListLayout")
-        local Dropdown = Instance.new("Frame")
+        local Dropdown = Instance.new("ScrollingFrame")
+
+        local autoscroll = newAutoScroll(true,false,UIListLayout_2,Dropdown)
 
         Dropdown.Name = "Dropdown"
         Dropdown.Parent = container
@@ -523,23 +568,22 @@ function library:CreateTab(text, desc, mode)
         UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
 
         for i, v in next, list do
-            local Option1 = Instance.new("TextButton")
-            Option1.Name = v
-            Option1.Parent = Dropdown
-            Option1.BackgroundColor3 = theme.Dropdown_Option_Color
-            Option1.BorderColor3 = theme.Dropdown_Option_BorderColor
-            Option1.BorderSizePixel = theme.Dropdown_Option_BorderSize
-            Option1.BackgroundTransparency = 0
-            Option1.Position = UDim2.new(0, 0, 0.5, 0)
-            Option1.Size = UDim2.new(0, 184, 0, 30)
-            Option1.Font = Enum.Font.SourceSansLight
-            Option1.Text = v
-            Option1.TextColor3 = theme.Dropdown_Option_Text_Color
-            Option1.TextSize = 16.000
-            Option1.AutoButtonColor = false
+            local Option = Instance.new("TextButton")
+            Option.Name = v
+            Option.Parent = Dropdown
+            Option.BackgroundColor3 = theme.Dropdown_Option_Color
+            Option.BorderColor3 = theme.Dropdown_Option_BorderColor
+            Option.BorderSizePixel = theme.Dropdown_Option_BorderSize
+            Option.BackgroundTransparency = 0
+            Option.Position = UDim2.new(0, 0, 0.5, 0)
+            Option.Size = UDim2.new(0, 184, 0, 30)
+            Option.Font = Enum.Font.SourceSansLight
+            Option.Text = v
+            Option.TextColor3 = theme.Dropdown_Option_Text_Color
+            Option.TextSize = 16.000
+            Option.AutoButtonColor = false
             DropYSize = DropYSize + 30
-
-            Option1.MouseButton1Click:Connect(function()
+            Option.MouseButton1Click:Connect(function()
                 callback(v)
                 DropdownText.Text = "  " .. text .. " / " .. v
                 TweenService:Create(
@@ -550,7 +594,7 @@ function library:CreateTab(text, desc, mode)
                 TweenService:Create(
                     container,
                     TweenInfo.new(0.1, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
-                    {Size = UDim2.new(0, 185, 0, BodyYSize)}
+                    {Size = UDim2.new(0, 185, 0, math.min(MaxSize,BodyYSize))}
                 ):Play()
                 IsDropped = false
                 DropdownOpen.Text = "+"
@@ -565,7 +609,6 @@ function library:CreateTab(text, desc, mode)
                     TweenInfo.new(0.1, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
                     {Size = UDim2.new(0, 184, 0, 30)}
                 ):Play()
-                
                 TweenService:Create(
                     container,
                     TweenInfo.new(0.1, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
@@ -617,7 +660,6 @@ function library:CreateTab(text, desc, mode)
                 a[i]:Destroy()
                 DropYSize = DropYSize - 30
             end
-            
         end
         function ssss:Reset(list)
             local list = list or {}
@@ -642,7 +684,7 @@ function library:CreateTab(text, desc, mode)
                 Option1.TextSize = 16.000
                 Option1.AutoButtonColor = false
                 DropYSize = DropYSize + 30
-                
+
                 Option1.MouseButton1Click:Connect(function()
                     callback(v)
                     DropdownText.Text = "  " .. text .. " / " .. v
@@ -750,7 +792,7 @@ function library:CreateTab(text, desc, mode)
 		callback = callback or function() end
 		local TextBox = Instance.new("TextBox")
 		local TextboxUnderline = Instance.new("Frame")
-		
+
 		TextBox.Parent = container
 		TextBox.BackgroundColor3 = theme.TextBox_Color
 		TextBox.BorderSizePixel = 0
