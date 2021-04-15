@@ -591,6 +591,7 @@ function library:CreateTab(text, desc, mode)
                     TweenInfo.new(0.1, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
                     {Size = UDim2.new(0, 184, 0, 30)}
                 ):Play()
+                print(MaxSize,BodyYSize,math.min(MaxSize,BodyYSize))
                 TweenService:Create(
                     container,
                     TweenInfo.new(0.1, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
