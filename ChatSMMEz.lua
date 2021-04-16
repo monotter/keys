@@ -49,8 +49,8 @@ end
 end
 end)
 local dayin = false
-MainTab:CreateToggle("Enable GJ", function(a)
-dayin = a
+MainTab:CreateToggle("Enable GJ", function(b)
+dayin = b
 while dayin do
 local count = 1
 local bst = {
