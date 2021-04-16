@@ -48,6 +48,54 @@ while anan do
 end
 end
 end)
+local dayin = false
+MainTab:CreateToggle("Enable GJ", function(a)
+dayin = a
+while dayin do
+local count = 1
+local bst = {
+    "Bir.",
+    "İki.",
+    "Üç.",
+    "Dört.",
+    "Beş.",
+    "Altı.",
+    "Yedi.",
+    "Sekiz.",
+    "Dokuz.",
+}
+local tst = {
+    "On",
+    "Yirmi",
+    "Otuz",
+    "Kırk",
+    "Elli",
+    "Altmış",
+    "Yetmiş",
+    "Seksen",
+    "Doksan",
+}
+local yz = "YÜZ"
+local bn = "BİN"
+while dayin do
+    local text = ""
+    if count < 10 then
+        text = text..bst[count]
+    else
+        if tostring(count):sub(2,2) == "0" then
+            text = tst[tonumber(tostring(count):sub(1,1))]
+        else
+            text = tst[tonumber(tostring(count):sub(1,1))].." "..bst[tonumber(tostring(count):sub(2,2))]
+        end
+    end
+    game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(text,"All")
+    count = count + 1
+    if count > 50 then break end
+    wait(3)
+end
+end
+end)
 MainTab:CreateButton("Kill all", function ()
 	for i,player in ipairs(game.Players:GetChildren()) do
 		local args = {
