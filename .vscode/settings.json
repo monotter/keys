@@ -11,6 +11,16 @@
         "setreadonly",
         "make_writeable",
         "newcclosure",
-        "V"
+        "V",
+        "Color3",
+        "UDim2",
+        "UDim",
+        "Enum",
+        "Vector2",
+        "Rect",
+        "TweenInfo"
+    ],
+    "Lua.diagnostics.disable": [
+        "undefined-field"
     ]
 }
