@@ -1,5 +1,16 @@
 {
     "Lua.diagnostics.globals": [
-        "game"
+        "game",
+        "Vector3",
+        "workspace",
+        "Ray",
+        "Instance",
+        "wait",
+        "getrawmetatable",
+        "make_readonly",
+        "setreadonly",
+        "make_writeable",
+        "newcclosure",
+        "V"
     ]
 }
