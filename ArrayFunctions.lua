@@ -1,5 +1,5 @@
 --[[
-Array Functions Made By Monotter and Dovg
+Array Functions Made By Monotter
 Version: 2
 ]]
 local module = {}
