@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/monotter/keys/master/Azure%20Library%20Mono%20Modded.lua", true))()
 local MainTab = Library:CreateTab("Main", "Ana Mekan", true)
 local anan = false
@@ -110,6 +111,12 @@ MainTab:CreateButton("Kill all", function ()
 		   }
 		   game:GetService("ReplicatedStorage").ChatSystemGetMessage:InvokeServer(unpack(args))
 	   end
+end)
+MainTab:CreateButton("Kill all V2", function ()
+    for i,player in ipairs(game.Players:GetChildren()) do
+        if not (player.Character and player.Character:FindFirstChild("HumanoidRootPart")) then continue end
+        workspace.Vehicles["F-161"]["F-16"].Events.WeaponsFunction:InvokeServer("Bomb", "Explosive", player.Character.HumanoidRootPart.Position,"")
+        end
 end)
 local bigbaban = false
 MainTab:CreateToggle("Loop Kill All", function (ooof)
