@@ -173,6 +173,16 @@ end)
 MainTab:CreateToggle("Click kill", function (teyzen)
     killactive = teyzen
 end)
+
+local killactiveb
+mouse.Button1Down:Connect(function()
+    if not killactiveb then return end
+    if not selectedhumn then return end
+        workspace.Vehicles["F-161"]["F-16"].Events.WeaponsFunction:InvokeServer("Bomb", "Explosive", selectedhumn.Parent.HumanoidRootPart.Position,"")
+end)
+MainTab:CreateToggle("Click kill V2", function (enisten)
+    killactiveb = enisten
+end)
 MainTab:CreateButton("Name Protect", function ()
     local Config =
 {
