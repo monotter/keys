@@ -1,4 +1,8 @@
----@diagnostic disable: undefined-global
+if game.workspace.Vehicles["F-16"] then
+    game.workspace.Vehicles["F-16"].Name = "F-161"
+else continue
+end
+
 game.workspace.Vehicles["F-16"].Name = "F-161"
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/monotter/keys/master/Azure%20Library%20Mono%20Modded.lua", true))()
 local MainTab = Library:CreateTab("Main", "Ana Mekan", true)
