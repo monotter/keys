@@ -19,7 +19,8 @@
         "Vector2",
         "Rect",
         "TweenInfo",
-        "newAutoScroll"
+        "newAutoScroll",
+        "continue"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
