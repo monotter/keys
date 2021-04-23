@@ -2,6 +2,7 @@ if game.PlaceId == 4913708314 then
     game.workspace.Vehicles["F-16"].Name = "F-161"
 end
 
+if game.ReplicatedStorage.ChatSystemGetMessage then
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/monotter/keys/master/Azure%20Library%20Mono%20Modded.lua", true))()
 local MainTab = Library:CreateTab("Main", "Ana Mekan", true)
 local anan = false
@@ -345,3 +346,4 @@ if Config.UseMetatableHook then
     SetRO(MT, true)
 end
 end)
+end
