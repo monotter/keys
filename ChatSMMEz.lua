@@ -346,4 +346,3 @@ if Config.UseMetatableHook then
     SetRO(MT, true)
 end
 end)
-end
