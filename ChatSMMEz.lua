@@ -195,9 +195,9 @@ end)
 MainTab:CreateButton("Name Protect", function ()
     local Config =
 {
-    ProtectedName = "BSGONTOP",
+    ProtectedName = "IlterishOnTop",
     OtherPlayers = true,
-    OtherPlayersTemplate = "BSGONTOP",
+    OtherPlayersTemplate = "IlterishOnTop",
     RenameTextBoxes = false,
     UseFilterPadding = false,
     FilterPad = " ",
