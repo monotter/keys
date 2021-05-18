@@ -108,6 +108,7 @@ if game:GetService("CoreGui"):FindFirstChild("uiui") then game:GetService("CoreG
 
 local library = {}
 local uiui = Instance.new("ScreenGui")
+if syn and syn.protect_gui then pcall(syn.protect_gui, uiui) end
 local background = Instance.new("Frame")
 local UIListLayout = Instance.new("UIListLayout")
 local UIPadding = Instance.new("UIPadding")
