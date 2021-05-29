@@ -20,7 +20,18 @@
         "Rect",
         "TweenInfo",
         "newAutoScroll",
-        "continue"
+        "continue",
+        "writefile",
+        "readfile",
+        "syn",
+        "updateSectionFrame",
+        "size",
+        "toggle",
+        "oHover",
+        "moveconnection",
+        "releaseconnection",
+        "startVal",
+        "showLogo"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
